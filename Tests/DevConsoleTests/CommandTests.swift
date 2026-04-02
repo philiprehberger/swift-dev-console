@@ -10,8 +10,10 @@ final class CommandTests: XCTestCase {
         XCTAssertEqual(cmd.name, "ping")
         XCTAssertEqual(cmd.description, "Ping test")
     }
+}
 
-    @MainActor
+@MainActor
+final class CommandHistoryTests: XCTestCase {
     func testCommandHistory() {
         let console = DevConsole.shared
         console.registerCommand("test-hist") { "ok" }
