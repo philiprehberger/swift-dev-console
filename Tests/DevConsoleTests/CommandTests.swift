@@ -10,17 +10,16 @@ final class CommandTests: XCTestCase {
         XCTAssertEqual(cmd.name, "ping")
         XCTAssertEqual(cmd.description, "Ping test")
     }
-}
 
-@MainActor
-final class CommandHistoryTests: XCTestCase {
-    func testCommandHistory() {
-        let console = DevConsole.shared
-        console.registerCommand("test-hist") { "ok" }
-        _ = console.executeAndRecord("test-hist")
-        _ = console.executeAndRecord("test-hist")
-        XCTAssertEqual(console.commandHistory().count, 2)
-        console.clearHistory()
-        XCTAssertTrue(console.commandHistory().isEmpty)
+    func testCommandHistory() async {
+        await MainActor.run {
+            let console = DevConsole.shared
+            console.registerCommand("test-hist") { "ok" }
+            _ = console.executeAndRecord("test-hist")
+            _ = console.executeAndRecord("test-hist")
+            XCTAssertEqual(console.commandHistory().count, 2)
+            console.clearHistory()
+            XCTAssertTrue(console.commandHistory().isEmpty)
+        }
     }
 }
