@@ -24,6 +24,12 @@ public final class DevConsole: Sendable {
     /// The environment manager.
     public let environment = EnvironmentManager()
 
+    /// The analytics event store.
+    public let analytics = AnalyticsStore()
+
+    /// History of executed commands.
+    private var _commandHistory: [String] = []
+
     /// Registered custom commands.
     private var commands: [String: Command] = [:]
 
@@ -68,6 +74,25 @@ public final class DevConsole: Sendable {
     /// List all registered command names.
     public func availableCommands() -> [String] {
         commands.keys.sorted()
+    }
+
+    /// Execute a command and record it in history.
+    ///
+    /// - Parameter name: The command name.
+    /// - Returns: The command output.
+    public func executeAndRecord(_ name: String) -> String {
+        _commandHistory.append(name)
+        return executeCommand(name)
+    }
+
+    /// Get the command execution history.
+    public func commandHistory() -> [String] {
+        _commandHistory
+    }
+
+    /// Clear command history.
+    public func clearHistory() {
+        _commandHistory.removeAll()
     }
 
     /// Enable shake-to-open on iOS. Call this in your app's didFinishLaunching.

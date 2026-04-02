@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-04-02
+
+### Added
+- `AnalyticsStore` for tracking custom events with properties
+- `AnalyticsEvent` value type with name, properties, and timestamp
+- `DevConsole.analytics` property for accessing the analytics store
+- `DevConsole.executeAndRecord(_:)` for command execution with history
+- `DevConsole.commandHistory()` and `clearHistory()` for command recall
+
 ## [0.1.0] - 2026-04-02
 
 ### Added

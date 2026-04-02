@@ -129,6 +129,28 @@ console.registerCommand("clear-cache", description: "Clear all caches") {
 let output = console.executeCommand("clear-cache")  // "Cache cleared"
 ```
 
+### Analytics Events
+
+Track custom events with properties:
+
+```swift
+console.analytics.track("button_click", properties: ["button": "checkout"])
+console.analytics.track("page_view", properties: ["page": "home"])
+
+let clicks = console.analytics.events(named: "button_click")
+let summary = console.analytics.summary()  // [(name: "button_click", count: 1), ...]
+let exported = console.analytics.export()
+```
+
+### Command History
+
+Track and recall executed commands:
+
+```swift
+let output = console.executeAndRecord("clear-cache")
+console.commandHistory()  // ["clear-cache"]
+```
+
 ### Shake to Open (iOS)
 
 Enable shake gesture to toggle the console:
@@ -155,6 +177,10 @@ window = ShakeDetectingWindow(windowScene: windowScene)
 | `.registerCommand(_:description:handler:)` | Register a custom command |
 | `.executeCommand(_:)` | Execute a command by name |
 | `.availableCommands()` | List all command names |
+| `.analytics` | Access the analytics store |
+| `.executeAndRecord(_:)` | Execute a command and record in history |
+| `.commandHistory()` | List previously executed commands |
+| `.clearHistory()` | Clear command history |
 | `.enableShakeToOpen()` | Enable shake gesture (iOS) |
 
 ### `LogStore`
@@ -194,6 +220,19 @@ window = ShakeDetectingWindow(windowScene: windowScene)
 | `.removeOverride(_:)` | Revert to default |
 | `.clearOverrides()` | Remove all overrides |
 | `.allFlags()` | List all flags with status |
+
+### `AnalyticsStore`
+
+| Method | Description |
+|--------|-------------|
+| `.track(_:properties:)` | Track a named event |
+| `.all()` | Get all events |
+| `.events(named:)` | Filter by event name |
+| `.events(from:to:)` | Filter by date range |
+| `.summary()` | Unique event names with counts |
+| `.clear()` | Clear all events |
+| `.count` | Number of tracked events |
+| `.export()` | Export as formatted string |
 
 ### `EnvironmentManager`
 
